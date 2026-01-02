@@ -1,8 +1,11 @@
 import Filter from "@/app/_components/Filter";
 import Pagination from "@/app/_components/Pagination";
 import PostItem from "@/app/_components/PostItem";
+import { getDiscussPosts } from "@/lib/discussPosts";
 
-export default function Home() {
+export default async function Home() {
+  const discussPosts = await getDiscussPosts();
+
   return (
     <div className="main">
       <div className="container">
@@ -19,7 +22,11 @@ export default function Home() {
         </div>
         {/* pop up window for publish */}
 
-        <PostItem />
+        <ul className="list-unstyled">
+          {discussPosts.map((post) => (
+            <PostItem post={post} key={post.id} />
+          ))}
+        </ul>
         <Pagination />
       </div>
     </div>
